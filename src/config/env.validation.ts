@@ -1,48 +1,34 @@
-import { plainToClass, Type } from 'class-transformer';
-import {
-  IsString,
-  IsNumber,
-  validateSync,
-  ValidateNested,
-  IsBoolean,
-} from 'class-validator';
-
-class AppConfig {
-  @IsString({ message: 'Stage must be a string' })
-  stage: string;
-
-  @IsNumber({}, { message: 'Port must be a number' })
-  port: number;
-}
-
-class DatabaseConfig {
-  @IsString({ message: 'Database host must be a string' })
-  host: string;
-
-  @IsNumber({}, { message: 'Database port must be a number' })
-  port: number;
-
-  @IsString({ message: 'Database username must be a string' })
-  username: string;
-
-  @IsString({ message: 'Database password must be a string' })
-  password: string;
-
-  @IsString({ message: 'Database name must be a string' })
-  name: string;
-
-  @IsBoolean({ message: 'Synchronize must be a boolean' })
-  synchronize: boolean;
-}
+import { plainToClass } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsString, validateSync } from 'class-validator';
 
 export class Configuration {
-  @ValidateNested()
-  @Type(() => AppConfig)
-  app: AppConfig;
+  @IsString()
+  @IsNotEmpty()
+  APP_STAGE: string;
 
-  @ValidateNested()
-  @Type(() => DatabaseConfig)
-  database: DatabaseConfig;
+  @IsNumber()
+  @IsNotEmpty()
+  APP_PORT: number;
+
+  @IsString()
+  @IsNotEmpty()
+  DATABASE_HOST: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  DATABASE_PORT: number;
+
+  @IsString()
+  @IsNotEmpty()
+  DATABASE_USERNAME: string;
+
+  @IsString()
+  @IsNotEmpty()
+  DATABASE_PASSWORD: string;
+
+  @IsString()
+  @IsNotEmpty()
+  DATABASE_NAME: string;
 }
 
 export function validate(config: Record<string, unknown>) {
