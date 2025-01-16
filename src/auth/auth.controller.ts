@@ -22,8 +22,8 @@ export class AuthController {
     const { accessToken } = await this.authService.signToken(req.user.id);
     setCookie(res, 'access_token', accessToken, {
       httpOnly: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
     });
-    res.redirect('http://localhost:3000/');
+    res.redirect('http://localhost:3001/');
   }
 }

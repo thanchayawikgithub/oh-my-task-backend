@@ -6,8 +6,10 @@ export const setCookie = (
   value: string,
   options: CookieOptions,
 ) => {
-  const secure = process.env.NODE_ENV === 'production';
-  res.cookie(name, value, { ...options, secure });
+  res.cookie(name, value, {
+    ...options,
+    secure: process.env.NODE_ENV === 'production',
+  });
 };
 
 export const clearCookie = (res: Response, name: string) => {
